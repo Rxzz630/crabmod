@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "crabmod",
+  "version": "${version}",
+  "name": "Crab Mod",
+  "description": "Menambahkan mob Crab (mob yang batal rilis di Mob Vote 2023) ke Minecraft Java Edition",
+  "authors": ["You"],
+  "contact": {},
+  "license": "CC0-1.0",
+  "icon": "assets/crabmod/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.crabmod.CrabMod"],
+    "client": ["com.crabmod.client.CrabModClient"]
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "fabric-api": "*",
+    "minecraft": "~1.21.10",
+    "java": ">=21"
+  }
+}
