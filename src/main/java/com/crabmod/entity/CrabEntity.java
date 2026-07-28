@@ -1,6 +1,7 @@
 package com.crabmod.entity;
 
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.goal.FleeEntityGoal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -11,8 +12,13 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class CrabEntity extends AnimalEntity {
 
@@ -39,7 +45,7 @@ public class CrabEntity extends AnimalEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
-        this.goalSelector.add(1, new AnimalEntity.FleeEntityGoal<>(this, PlayerEntity.class, 6.0F, 1.4, 1.4));
+        this.goalSelector.add(1, new FleeEntityGoal<>(this, PlayerEntity.class, 6.0F, 1.4, 1.4));
         this.goalSelector.add(4, new WanderAroundFarGoal(this, 0.8));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.add(6, new LookAroundGoal(this));
@@ -51,6 +57,17 @@ public class CrabEntity extends AnimalEntity {
 
     public void setClawRaised(boolean raised) {
         this.dataTracker.set(CLAW_RAISED, raised);
+    }
+
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        return stack.isOf(Items.KELP);
+    }
+
+    @Nullable
+    @Override
+    public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
+        return new CrabEntity(ModEntities.CRAB, world);
     }
 
     @Override
