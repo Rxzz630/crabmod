@@ -17,6 +17,7 @@ public class CrabModel extends EntityModel<CrabEntity> {
     private final ModelPart clawLeft, clawRight;
 
     public CrabModel(ModelPart root) {
+        applyPivots(root);
         this.body = root.getChild("body");
         this.legFL = root.getChild("leg_fl");
         this.legFR = root.getChild("leg_fr");
@@ -32,33 +33,45 @@ public class CrabModel extends EntityModel<CrabEntity> {
 
         root.addChild("body", ModelPartBuilder.create()
                         .uv(0, 0).cuboid(-4.0F, -3.0F, -5.0F, 8.0F, 3.0F, 10.0F),
-                ModelTransform.pivot(0.0F, 21.0F, 0.0F));
+                ModelTransform.NONE);
 
         root.addChild("leg_fl", ModelPartBuilder.create()
                         .uv(0, 13).cuboid(-3.0F, 0.0F, -1.0F, 3.0F, 3.0F, 2.0F),
-                ModelTransform.pivot(-4.0F, 21.0F, -3.0F));
+                ModelTransform.NONE);
 
         root.addChild("leg_fr", ModelPartBuilder.create()
                         .uv(0, 18).cuboid(0.0F, 0.0F, -1.0F, 3.0F, 3.0F, 2.0F),
-                ModelTransform.pivot(4.0F, 21.0F, -3.0F));
+                ModelTransform.NONE);
 
         root.addChild("leg_bl", ModelPartBuilder.create()
                         .uv(0, 13).cuboid(-3.0F, 0.0F, -1.0F, 3.0F, 3.0F, 2.0F),
-                ModelTransform.pivot(-4.0F, 21.0F, 3.0F));
+                ModelTransform.NONE);
 
         root.addChild("leg_br", ModelPartBuilder.create()
                         .uv(0, 18).cuboid(0.0F, 0.0F, -1.0F, 3.0F, 3.0F, 2.0F),
-                ModelTransform.pivot(4.0F, 21.0F, 3.0F));
+                ModelTransform.NONE);
 
         root.addChild("claw_left", ModelPartBuilder.create()
                         .uv(20, 0).cuboid(-4.0F, -1.0F, -2.0F, 4.0F, 3.0F, 3.0F),
-                ModelTransform.pivot(-6.0F, 20.0F, -5.0F));
+                ModelTransform.NONE);
 
         root.addChild("claw_right", ModelPartBuilder.create()
                         .uv(20, 8).cuboid(0.0F, -1.0F, -2.0F, 4.0F, 3.0F, 3.0F),
-                ModelTransform.pivot(6.0F, 20.0F, -5.0F));
+                ModelTransform.NONE);
 
-        return TexturedModelData.of(modelData, 32, 32);
+        TexturedModelData data = TexturedModelData.of(modelData, 32, 32);
+
+        return data;
+    }
+
+    private static void applyPivots(ModelPart root) {
+        root.getChild("body").setPivot(0.0F, 21.0F, 0.0F);
+        root.getChild("leg_fl").setPivot(-4.0F, 21.0F, -3.0F);
+        root.getChild("leg_fr").setPivot(4.0F, 21.0F, -3.0F);
+        root.getChild("leg_bl").setPivot(-4.0F, 21.0F, 3.0F);
+        root.getChild("leg_br").setPivot(4.0F, 21.0F, 3.0F);
+        root.getChild("claw_left").setPivot(-6.0F, 20.0F, -5.0F);
+        root.getChild("claw_right").setPivot(6.0F, 20.0F, -5.0F);
     }
 
     @Override
