@@ -20,7 +20,7 @@ public class ModItems {
     public static final Item CRAB_SPAWN_EGG = Registry.register(
             Registries.ITEM,
             Identifier.of(CrabMod.MOD_ID, "crab_spawn_egg"),
-            new SpawnEggItem(ModEntities.CRAB, 0x3a5c94, 0xd66a3c, new Item.Settings())
+            new SpawnEggItem(ModEntities.CRAB, new Item.Settings())
     );
 
     public static void register() {
