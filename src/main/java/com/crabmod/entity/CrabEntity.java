@@ -1,7 +1,6 @@
 package com.crabmod.entity;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -12,23 +11,9 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
-/**
- * Mob Crab - terinspirasi dari mob yang diajukan (dan kalah)
- * pada Mob Vote Minecraft Live 2023.
- */
 public class CrabEntity extends AnimalEntity {
 
     private static final TrackedData<Boolean> CLAW_RAISED =
@@ -69,50 +54,10 @@ public class CrabEntity extends AnimalEntity {
     }
 
     @Override
-    public boolean canBreatheInWater() {
-        return true;
-    }
-
-    @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-    }
-
-    @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-    }
-
-    @Nullable
-    @Override
-    public PassiveEntity createChild(ServerWorldAccess world, PassiveEntity entity) {
-        return com.crabmod.entity.ModEntities.CRAB.create(world.toServerWorld());
-    }
-
-    @Override
-    public boolean isBreedingItem(ItemStack stack) {
-        return stack.isOf(Items.KELP);
-    }
-
-    @Override
-    protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-        ActionResult result = super.interactMob(player, hand);
-        if (!result.isAccepted()) {
-            this.setClawRaised(true);
-        }
-        return result;
-    }
-
-    @Override
     public void tick() {
         super.tick();
         if (this.isClawRaised() && this.age % 10 == 0) {
             this.setClawRaised(false);
         }
-    }
-
-    @Override
-    public boolean canSpawn(net.minecraft.world.WorldView world) {
-        return true;
     }
 }
